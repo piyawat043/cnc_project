@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNC 3D Viewer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        canvas { width: 100%; height: 400px; display: block; margin: auto; }
+        button { margin: 10px; padding: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>CNC 3D Viewer</h1>
+    <div id="viewer"></div>
+    <button onclick="speakText('th')">🔊 ฟังเสียงภาษาไทย</button>
+    <button onclick="speakText('en')">🔊 Listen in English</button>
+    <br>
+    <a href="cnc_manual.pdf" download><button>📄 ดาวน์โหลดคู่มือ PDF</button></a>
+
+    <script>
+        function speakText(lang) {
+            let text_th = "นี่คือเครื่อง CNC ส่วนนี้คือ Spindle ที่ใช้หมุนหัวกัด";
+            let text_en = "This is a CNC machine. This part is the Spindle that rotates the cutting tool.";
+            let utterance = new SpeechSynthesisUtterance(lang === 'th' ? text_th : text_en);
+            utterance.lang = lang === 'th' ? 'th-TH' : 'en-US';
+            speechSynthesis.speak(utterance);
+        }
+
+        // Load CNC Model
+        let scene, camera, renderer;
+        function init() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth * 0.8, window.innerHeight * 0.6);
+            document.getElementById("viewer").appendChild(renderer.domElement);
+            
+            let light = new THREE.AmbientLight(0xffffff, 1);
+            scene.add(light);
+            
+            let loader = new THREE.GLTFLoader();
+            loader.load("https://raw.githubusercontent.com/piyawat043/cnc_project/main/cnc_model.glb", function (gltf) {
+                scene.add(gltf.scene);
+                gltf.scene.position.set(0, -50, 0);
+            });
+            
+            camera.position.z = 300;
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        
+        window.onload = init;
+    </script>
+</body>
+</html>
