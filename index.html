@@ -41,10 +41,11 @@
             let light = new THREE.AmbientLight(0xffffff, 1);
             scene.add(light);
             
-loader.load("https://raw.githubusercontent.com/piyawat043/cnc_project/746ccc60ab93ad9c45697b068d7c67442048953e/cnc_model.glb", function (gltf) {
+loader.load("https://raw.githubusercontent.com/piyawat043/cnc_project/main/cnc_model.glb", function (gltf) {
     scene.add(gltf.scene);
     gltf.scene.position.set(0, -50, 0);
 });
+
 
             
             camera.position.z = 300;
