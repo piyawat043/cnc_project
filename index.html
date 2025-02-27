@@ -1,62 +1,48 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>รายการไฟล์ STL จาก GitHub</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNC Project Files</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 18px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-  <h1>รายการไฟล์ STL จากโปรเจกต์ CNC</h1>
-  <ul id="stl-file-list"></ul>
-
-  <script>
-    const owner = 'piyawat043';        // ชื่อเจ้าของ repo
-    const repo = 'cnc_project';        // ชื่อ repo
-    const branch = 'main';             // สาขาที่ต้องการดึงไฟล์ (เปลี่ยนได้ถ้าใช้สาขาอื่น)
-
-    async function fetchStlFiles() {
-      // เรียกใช้ GitHub API เพื่อขอรายการไฟล์ทั้งหมดใน repo
-      // โดยตั้งค่า recursive=1 เพื่อให้ได้รายการทุกโฟลเดอร์ย่อยด้วย
-      const apiUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`;
-
-      try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        // เมื่อได้ข้อมูลแล้ว จะอยู่ใน data.tree
-        if (data.tree) {
-          // คัดกรองเอาเฉพาะไฟล์ที่นามสกุล .stl
-          const stlFiles = data.tree.filter(item => {
-            return item.type === 'blob' && item.path.toLowerCase().endsWith('.stl');
-          });
-
-          // แสดงรายการไฟล์ .stl ในหน้าเว็บ
-          const fileList = document.getElementById('stl-file-list');
-
-          stlFiles.forEach(file => {
-            const listItem = document.createElement('li');
-
-            // สร้างลิงก์ไปดูไฟล์บน GitHub (ในหน้า blob)
-            // หรือถ้าต้องการดาวน์โหลดไฟล์ดิบก็สามารถเปลี่ยนไปใช้ raw.githubusercontent.com ได้
-            const fileLink = document.createElement('a');
-            fileLink.href = `https://github.com/${owner}/${repo}/blob/${branch}/${file.path}`;
-            fileLink.textContent = file.path;
-            fileLink.target = '_blank'; // เปิดในแท็บใหม่
-
-            listItem.appendChild(fileLink);
-            fileList.appendChild(listItem);
-          });
-
-        } else {
-          console.error('ไม่พบข้อมูลไฟล์ใน repository นี้');
-        }
-
-      } catch (error) {
-        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
-      }
-    }
-
-    // เรียกฟังก์ชันเมื่อโหลดหน้าเสร็จ
-    fetchStlFiles();
-  </script>
+    <h1>CNC Project Files</h1>
+    <p>คลิกที่ไฟล์เพื่อเปิดดูหรือคลิกขวาเลือกดาวน์โหลด</p>
+    <ul>
+        <li><a href="https://github.com/piyawat043/cnc_project/blob/main/3D%20BabyGroot%20(1).stl" target="_blank">3D BabyGroot (1).stl</a></li>
+        <li><a href="https://github.com/piyawat043/cnc_project/blob/main/TAK%20M8%20-030120.DXF" target="_blank">TAK M8 -030120.DXF</a></li>
+        <li><a href="https://github.com/piyawat043/cnc_project/blob/main/clamp%20m6.DXF" target="_blank">clamp m6.DXF</a></li>
+        <li><a href="https://github.com/piyawat043/cnc_project/blob/main/clamp%20m6.STL" target="_blank">clamp m6.STL</a></li>
+        <li><a href="https://github.com/piyawat043/cnc_project/blob/main/suneye.stl" target="_blank">suneye.stl</a></li>
+        <li><a href="https://github.com/piyawat043/cnc_project/blob/main/tak%20m8.STL" target="_blank">tak m8.STL</a></li>
+        <li><a href="https://github.com/piyawat043/cnc_project/blob/main/vacuum%20200300%20(1).DXF" target="_blank">vacuum 200300 (1).DXF</a></li>
+        <li><a href="https://github.com/piyawat043/cnc_project/blob/main/vacuum%20200300%20(2).DXF" target="_blank">vacuum 200300 (2).DXF</a></li>
+        <li><a href="https://github.com/piyawat043/cnc_project/blob/main/vacuum%20200300%20(3).DXF" target="_blank">vacuum 200300 (3).DXF</a></li>
+        <li><a href="https://github.com/piyawat043/cnc_project/blob/main/vacuum200300%20(1).STL" target="_blank">vacuum200300 (1).STL</a></li>
+        <li><a href="https://github.com/piyawat043/cnc_project/blob/main/vacuum200300%20(2).STL" target="_blank">vacuum200300 (2).STL</a></li>
+        <li><a href="https://github.com/piyawat043/cnc_project/blob/main/vacuum200300%20(3).STL" target="_blank">vacuum200300 (3).STL</a></li>
+    </ul>
 </body>
 </html>
